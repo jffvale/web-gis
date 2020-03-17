@@ -24,15 +24,20 @@
             "tsConfig": "tsconfig.app.json",
             "aot": false,
             "assets": [
-              "src/favicon.ico",
+              "src/favicon.png",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "node_modules/primeicons/primeicons.scss",
+              "node_modules/primeng/resources/themes/nova-light/theme.scss",
+              "node_modules/primeng/resources/primeng.min.scss",
+              "src/styles.scss",
+              "node_modules/ol/ol.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.js"
+              "node_modules/bootstrap/dist/js/bootstrap.js",
+              "node_modules/chart.js/dist/chart.js"
             ]
           },
           "configurations": {
