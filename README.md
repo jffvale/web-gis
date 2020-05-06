@@ -11,7 +11,7 @@ Sistema Web GIS para a visualização de talhões com dados espaço-temporais, p
 Para a execução desta aplicação ao é necessário ter o projeto [API Restful](https://github.com/ProjetoIntegradorADSFatec/api-restful) em execução utilizando Docker ou o ambiente de desenvolvimento.
 
 ## Execução para o ambiente de micro serviços em Docker
-**Obs.:** Necessária instalação do *Node 10+* e *Angular CLI 9+*, não esqueça de modificar o ip do serviço de cache em `app/services/cache-system.ts`.
+> **Obs.:** Necessária instalação do *Node 10+* e *Angular CLI 9+*, não esqueça de modificar o ip do serviço de cache em `app/services/cache-system.ts`.
 
 ```
 ##  Construir o pacote HTML para a execução do http-server
@@ -29,6 +29,12 @@ $ docker build -t web-gis:latest .
 ## Fica a criterio do usuario criar um volume para armazenar os dados
 $ docker container run --name app-smh-ui -p 8082:8080 -d web-gis:latest
 ```
+
+> Abaixo se encontra a aplicação em funcionamento utilizando os passos anteriores:
+
+<p align = "center">
+  <img src = "./doc/assets/web-gis.gif">
+</p>
 
 Este projeto foi gerado utilizando [Angular CLI](https://github.com/angular/angular-cli) versão 9+.
 
