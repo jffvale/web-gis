@@ -33,7 +33,7 @@ $ docker container run --name app-smh-ui -p 8082:8080 -d web-gis:latest
 > Abaixo se encontra a aplicação em funcionamento utilizando os passos anteriores:
 
 <p align = "center">
-  <img src = "./doc/assets/web-gis.gif">
+  <img src = "./docs/assets/web-gis.gif">
 </p>
 
 Este projeto foi gerado utilizando [Angular CLI](https://github.com/angular/angular-cli) versão 9+.
