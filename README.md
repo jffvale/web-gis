@@ -1,28 +1,63 @@
 # Web GIS
 
-Sistema Web GIS para a visualização de talhões com dados espaço-temporais.
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) latest
+[![Docker](https://img.shields.io/badge/docker-latest-green)](https://www.docker.com/)
+[![NodeJS](https://img.shields.io/badge/node-12-green)](https://nodejs.org/en/)
+[![TypeScript](https://img.shields.io/badge/typescript-latest-green)](https://www.typescriptlang.org/)
+[![Angular](https://img.shields.io/badge/angular-7.2.2-green)](https://angular.io/)
+[![Openlayers](https://img.shields.io/badge/openlayers-6.3.1-green)](https://openlayers.org/)
 
-## Development server
+Sistema Web GIS para a visualização de talhões com dados espaço-temporais, permitindo o recorte e buscas de áreas de interesse por extensivo uso da biblioteca [*Openlayers*](https://openlayers.org/).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Para a execução desta aplicação ao é necessário ter o projeto [API Restful](https://github.com/ProjetoIntegradorADSFatec/api-restful) em execução utilizando Docker ou o ambiente de desenvolvimento.
 
-## Code scaffolding
+## Execução para o ambiente de micro serviços em Docker
+> **Obs.:** Necessária instalação do *Node 10+* e *Angular CLI 9+*, não esqueça de modificar o ip do serviço de cache em `app/services/cache-system.ts`.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+##  Construir o pacote HTML para a execução do http-server
+$ ng build
 
-## Build
+## Copie o arquivo Dockerfile para o pacote recém-gerado
+$ cp Dockerfile dist/web-gis && cd dist/web-gis
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+> Para a execução do ambiente em docker execute os seguintes comandos:
+```
+## Crie uma imagem para a execução do container
+$ docker build -t web-gis:latest .
 
-## Running unit tests
+## Fica a criterio do usuario criar um volume para armazenar os dados
+$ docker container run --name app-smh-ui -p 8082:8080 -d web-gis:latest
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+> Abaixo se encontra a aplicação em funcionamento utilizando os passos anteriores:
 
-## Running end-to-end tests
+<p align = "center">
+  <img src = "./docs/assets/web-gis.gif">
+</p>
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Este projeto foi gerado utilizando [Angular CLI](https://github.com/angular/angular-cli) versão 9+.
 
-## Further help
+## Servidor para o ambiente de desenvolvimento
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Executar o seguinte comando `ng serve` para executar um novo servidor de desenvolvimento. No navegador procure pelo endereço `http://localhost:4200/`. A aplicação irá realizar a leitura automática de arquivos em conjunto com as alterações implementadas.
+
+## Desenvolvimento de código
+
+Executar o seguinte comando `ng generate component component-name` para gerar um novo componente em Linguagem **TypeScript**.
+
+## Gerando pacotes *HTML*
+
+Execute o seguinte comando `ng build` para gerar o pacote *HTML* para a execução. Use o comando `--prod` **tag** para o ambiente de produção.
+
+## Testes Unitários
+
+Execute `ng test` para executar os testes unitários via [Karma](https://karma-runner.github.io).
+
+## Executando testes *end-to-end*
+
+Execute `ng e2e` para executar o testes *end-to-end* via [Protractor](http://www.protractortest.org/)
+
+## Ajuda FAQ
+
+Para maisinformações sobre a usabilidade da interface de linha de comando use `ng help` ou dê uma olhada [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md) .
