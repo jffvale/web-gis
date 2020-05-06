@@ -1,18 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MapComponent } from './map/map.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
-import { FooterComponent } from './footer/footer.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -20,8 +21,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     InputSwitchModule,
     DropdownModule,
     FormsModule,
-    BrowserAnimationsModule,
-    NgbModule
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
