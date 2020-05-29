@@ -1,0 +1,134 @@
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.header {
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-between;
+    background: rgb(250, 178, 108);
+    background: linear-gradient(180deg, rgba(250, 178, 108, 1) 0%, rgba(255, 213, 142, 1) 18%, rgba(255, 255, 255, 1) 100%);
+}
+
+.image {
+    margin-left: 20px;
+}
+
+.line {
+    background: rgb(238, 134, 0);
+    background: linear-gradient(180deg, rgba(238, 134, 0, 1) 4%, rgba(255, 174, 36, 1) 42%, rgba(238, 134, 0, 1) 96%);
+    width: 70%;
+    border-radius: 50px 0 0 0;
+    height: 30px;
+    display: flex;
+    align-self: flex-end;
+}
+
+.footer {
+    text-align: center;
+    display: flex;
+    background: rgb(238, 134, 0);
+    background: linear-gradient(180deg, rgba(238, 134, 0, 1) 4%, rgba(255, 174, 36, 1) 42%, rgba(238, 134, 0, 1) 96%);
+    height: 5vh;
+    justify-content: center;
+}
+
+.loved {
+    color: white;
+    display: flex;
+    margin: auto;
+    width: fit-content;
+}
+
+.side-menu {
+    display: flex;
+    position: absolute;
+    right: 0;
+    border-left: 2px solid rgb(238, 134, 0);
+    ;
+    width: 20%;
+    height: 85vh;
+    flex-direction: column;
+}
+
+.lista {
+    display: flex;
+    width: 100%;
+    height: 50%;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.arrow {
+    width: 95%;
+    margin: auto;
+    border-radius: 5px;
+    border: 2px solid
+}
+
+.add {
+    width: 100%;
+    height: 50%;
+}
+
+.title {
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: x-large;
+}
+
+.content {
+    overflow: scroll;
+    width: 100%;
+}
+
+.card {
+    -webkit-box-shadow: 2px 7px 76px -7px rgba(0, 0, 0, 0.32);
+    -moz-box-shadow: 2px 7px 76px -7px rgba(0, 0, 0, 0.32);
+    box-shadow: 2px 7px 76px -7px rgba(0, 0, 0, 0.32);
+    height: 150px;
+    margin: 30px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.square{
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.profile{
+    width: 60px;
+    height: 60px;
+    margin: 15px;
+    border: 0.1px solid;
+}
+.info{
+    text-align: left;
+    margin-left: 10px;
+}
+
+ul, li{
+    list-style: none;
+    margin: 0;
+}
+
+.button{
+    display: flex;
+    width: 70%;
+    margin: auto;
+    margin-top: 30px;
+    border-radius: 5px;
+    padding: 10px;
+    
+}

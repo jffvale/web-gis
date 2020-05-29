@@ -1,6 +1,8 @@
 .map {
-    width: 100%;
-    height: 930px;
+    width: 80%;
+    height: 85vh;
+    display: flex;
+    justify-self: end;
 }
 
 h4 {

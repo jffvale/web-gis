@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <img src="../../assets/images/logo.png" class="image" />
+        </div>
+        <div class="line"></div>
+    </div>
+    <div class="component">
+        <div class="side-menu">
+            <div class="lista">
+                <span class="title">Lista de imagens</span>
+                <div class="content">
+
+                    <li *ngFor="let number of [0,1,2,3,4]">
+                        <div class="card">
+
+                            <div class="square">
+                                <div class="photo">
+                                    <div class="profile">
+                                        <img src="https://image.flaticon.com/icons/png/512/854/854878.png" width="50px"
+                                            height="50px" />
+                                    </div>
+                                </div>
+                                <div class="data">
+                                    <div class="info"><b>ID:</b> {{number}}</div>
+                                    <div class="info"><b>Projection:</b> EPSG:4326</div>
+                                    <div class="info"><b>Latitude</b>: -12.042006</div>
+                                    <div class="info"><b>Longitude</b>: -45.873413</div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                </div>
+            </div>
+            <div class="arrow"></div>
+            <div class="add">
+                <button type="button" class="button">Adicionar imagem</button>
+                <button type="button" class="button">Procurar formas</button>
+
+                <button type="button" class="button">Excluir imagens</button>
+
+            </div>
+        </div>
+        <div class="map">
+            <app-map class="app-map"></app-map>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="loved">
+            Made by Fatec with &#x2665;
+        </div>
+    </div>
+</div>
