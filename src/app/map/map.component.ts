@@ -111,6 +111,7 @@ export class MapComponent implements OnInit {
       );
       if(url){
         document.getElementById('info').innerHTML = '<iframe id = "infoFrame" seamless src = "' + url + '"></iframe>';
+        console.log(event)
       }
     });
 
