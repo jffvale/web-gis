@@ -1,0 +1,29 @@
+<div class="mapa">
+    <!-- Opções do mapa -->
+    <div id = "form">
+        <input type = "text" placeholder = "Busca">
+        <button type = "button">Buscar</button>
+        <div id = "mouse-position"></div>
+    </div>
+    <div id = "seletor">
+        <div id = "separador">
+            <h4>Camadas</h4>
+            <table>
+                <tr>
+                    <td>Camada de Estados Brasileiros</td>
+                    <td><p-inputSwitch [(ngModel)] = "visible" (click) = "setLayer()"></p-inputSwitch></td>
+                </tr>
+                <tr>
+                    <td>Polígonos</td>
+                    <td><p-inputSwitch [(ngModel)] = "draw_bool" (click) = "drawFeature()"></p-inputSwitch></td>
+                </tr>
+                <tr>
+                    <button type = "button" (click) = "cleanAll()">Limpar Formas</button>
+                </tr>
+            </table>
+            <div id = "info" >&nbsp;</div>
+        </div>
+    </div>
+    <!-- Controle do Mapa -->
+    <div id = "map" class = "map"></div>
+</div>
