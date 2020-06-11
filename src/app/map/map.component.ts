@@ -16,6 +16,14 @@ import { createStringXY } from 'ol/coordinate.js';
 
 // Criação de desenhos e polígonos
 import Draw from 'ol/interaction/Draw.js';
+import GeoJSON from 'ol/format/GeoJSON';
+import Feature from 'ol/Feature';
+
+// Integração com a API
+import { Catalog } from '../entity/catalog';
+import { SearchRequest } from '../entity/search-request';
+import { DateTime } from '../entity/date-time';
+import { ApiRestfulService } from '../services/api-restful-service';
 
 @Component({
   selector: 'app-map',
@@ -30,12 +38,14 @@ export class MapComponent implements OnInit {
   public draw;
   public draw_bool;
   public coord;
+  private geojson;
   public source = new VectorSource({ wrapX: false });
 
   // Criando camadas
   public vector = new VectorLayer({
     source: this.source
   });
+
   public raster = new TileLayer({
     source: new OSM()
   });
@@ -69,7 +79,8 @@ export class MapComponent implements OnInit {
       })
   });
 
-  constructor() { }
+  // Integração com a API
+  constructor(private service: ApiRestfulService) { }
 
   ngOnInit(): void {
     this.initilizeMap();
@@ -163,6 +174,48 @@ export class MapComponent implements OnInit {
     this.raster = new TileLayer({
       source: new OSM()
     });
+  }
+
+  formatGeojson() {
+    var geom = [];
+    this.vector.getSource().forEachFeature(
+      function(feature) {
+        geom.push(new Feature(feature.getGeometry().clone().transform('EPSG:3857', 'EPSG:4326')));
+      }
+    );
+    this.geojson = JSON.parse(
+      new GeoJSON().writeFeatures(geom)
+    );
+  }
+
+  search() {
+    this.formatGeojson();
+    let request: SearchRequest = {
+      dateTime: {
+        start: "2017-01-01",
+        end: "2020-12-31"
+      },
+      band: "VH",
+      geojson: this.geojson
+    };
+    this.service.postSearchRequest(request).toPromise().then(
+      (data: Catalog[]) => {
+        data.forEach(
+          (item: Catalog) => {
+            console.log(item.image);
+          }
+        )
+      }
+    );
+    this.service.getCatalogList().toPromise().then(
+      (data: Catalog[]) => {
+        data.forEach(
+          (item: Catalog) => {
+            console.log(item.image);
+          }
+        )
+      }
+    );
   }
 
   setLayer (): void {
