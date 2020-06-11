@@ -40,7 +40,7 @@ Este projeto foi gerado utilizando [Angular CLI](https://github.com/angular/angu
 
 ## Servidor para o ambiente de desenvolvimento
 
-> **Obs:.** Não esqueça de modificar o arquivo de configuração do proxy para o servidor da API que for utilizar [proxy.conf.js](./proxy.conf.js)
+> **Obs:.** Não esqueça de modificar o arquivo de configuração do proxy para o servidor da API que for utilizar **[proxy.conf.js](./proxy.conf.js)**.
 
 ~~~shell
 # Instalar as dependências
