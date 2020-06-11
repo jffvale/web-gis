@@ -40,6 +40,16 @@ Este projeto foi gerado utilizando [Angular CLI](https://github.com/angular/angu
 
 ## Servidor para o ambiente de desenvolvimento
 
+> **Obs:.** Não esqueça de modificar o arquivo de configuração do proxy para o servidor da API que for utilizar [proxy.conf.js](./proxy.conf.js)
+
+~~~shell
+# Instalar as dependências
+$ npm install
+
+# Executar a aplicação
+$ npm start
+~~~
+
 Executar o seguinte comando `ng serve` para executar um novo servidor de desenvolvimento. No navegador procure pelo endereço `http://localhost:4200/`. A aplicação irá realizar a leitura automática de arquivos em conjunto com as alterações implementadas.
 
 ## Desenvolvimento de código
