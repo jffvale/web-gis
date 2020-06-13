@@ -28,10 +28,11 @@ import { ApiRestfulService } from '../services/api-restful-service';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.css','../base/base.component.css']
 })
 export class MapComponent implements OnInit {
   // Controle do Mapa
+  date;
   public map;
   public features;
   public visible;
@@ -59,26 +60,6 @@ export class MapComponent implements OnInit {
     layer: 'osm',
   });
 
-  public layer = new TileLayer({
-      title : 'terrama2_10:view10',
-      visible: false,
-      source: new TileWMS({
-        url: 'http://www.terrama2.dpi.inpe.br/chuva/geoserver/wms?',
-        params: {
-          'LAYERS': 'terrama2_10:view10',
-          'VERSION': '1.1.1',
-          'FORMAT': 'image/png',
-          'EPSG': '4674',
-          'TILED': true,
-          'TIME' : '1998-01-02'
-        },
-        preload: Infinity,
-        projection: 'EPSG:4674',
-        serverType: 'geoserver',
-        name: 'terrama2_10:view10'
-      })
-  });
-
   // Integração com a API
   constructor(private service: ApiRestfulService) { }
 
@@ -88,7 +69,7 @@ export class MapComponent implements OnInit {
 
   // Iniciar as configurações do mapa
   initilizeMap(): void {
-    this.features = [this.base, this.layer];
+    this.features = [this.base];
 
     var view = new View({
       center: [-6124801.2015823, -1780692.0106836],
@@ -108,22 +89,6 @@ export class MapComponent implements OnInit {
       layers: this.features,
       target: 'map',
       view: view
-    });
-
-    var camada = this.layer;
-    this.map.on('singleclick', function(event){
-      document.getElementById('info').innerHTML = '';
-      var viewResolution = view.getResolution();
-      var viewProjection = view.getProjection();
-      var url = camada.getSource().getFeatureInfoUrl(
-        event.coordinate, viewResolution, viewProjection,
-        "EPSG:4326",
-        { 'INFO_FORMAT' : 'text/javascript', 'propertyName' : 'formal_en' }
-      );
-      if(url){
-        document.getElementById('info').innerHTML = '<iframe id = "infoFrame" seamless src = "' + url + '"></iframe>';
-        console.log(event)
-      }
     });
 
     var mapAuxiliar = this.map;
@@ -188,7 +153,7 @@ export class MapComponent implements OnInit {
     );
   }
 
-  search() {
+  async search() {
     this.formatGeojson();
     let request: SearchRequest = {
       dateTime: {
@@ -198,7 +163,7 @@ export class MapComponent implements OnInit {
       band: "VH",
       geojson: this.geojson
     };
-    this.service.postSearchRequest(request).toPromise().then(
+    await this.service.postSearchRequest(request).toPromise().then(
       (data: Catalog[]) => {
         data.forEach(
           (item: Catalog) => {
@@ -207,18 +172,5 @@ export class MapComponent implements OnInit {
         )
       }
     );
-    this.service.getCatalogList().toPromise().then(
-      (data: Catalog[]) => {
-        data.forEach(
-          (item: Catalog) => {
-            console.log(item.image);
-          }
-        )
-      }
-    );
-  }
-
-  setLayer (): void {
-    this.layer.setVisible(this.visible);
   }
 }
