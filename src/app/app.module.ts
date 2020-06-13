@@ -31,7 +31,7 @@ import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-mo
     HttpClientModule,
     SatDatepickerModule,
     SatNativeDateModule
-    
+
   ],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

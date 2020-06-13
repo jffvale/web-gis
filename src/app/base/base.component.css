@@ -94,6 +94,7 @@
     -moz-box-shadow: 2px 7px 76px -7px rgba(0, 0, 0, 0.32);
     box-shadow: 2px 7px 76px -7px rgba(0, 0, 0, 0.32);
     height: 150px;
+    width: 450px;
     margin: 30px;
     border-radius: 5px;
     display: flex;
@@ -131,5 +132,5 @@ ul, li{
     margin-top: 30px;
     border-radius: 5px;
     padding: 10px;
-    
+
 }
