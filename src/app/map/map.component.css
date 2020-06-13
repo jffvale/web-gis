@@ -25,13 +25,83 @@ table td{
     width: 100;
 }
 
+#botao{
+    height: 100%;
+    width: 20%;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: white;
+    border: 0;
+    transition: 0.5s;
+}
+
+
+
+#search{
+    background-color: white;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 0;
+}
+
+
+#botao:hover{
+    background-color: #ee8600;
+}
+
+
+#text{
+    width: 80%;
+    height: 45px;
+    margin: 0;
+    padding: 10px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    font-size: large;
+    border: 0;
+
+}
+
+#mouse-position{
+    display: none;
+}
+
+
+#satelite{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#option-satelite{
+    margin-top: 10px;
+}
+
+#titulo-satelite{
+    display: block;
+}
+
+#titulo-satelite-banda{
+    display: block;
+    margin-bottom: 10px;
+}
+#date{
+    margin: 0;
+}
+
 #seletor{
     z-index: 1;
     position: absolute;
-    width: 330px;
-    height: 600px;
-    background-color: rgb(255, 255, 255,0.7);
-    margin: 150px 0 0 55px;
+    width: 20%;
+    height: 70%;
+    background-color: rgb(255, 255, 255, 0.9);
+    margin: 50px 0 0 55px;
+    border-radius: 15px;
+    -webkit-box-shadow: 2px 7px 50px -2px rgba(0, 0, 0, 0.32);
+    -moz-box-shadow: 2px 7px 50px -2px rgba(0, 0, 0, 0.32);
+    box-shadow: 2px 7px 50px -2px rgba(0, 0, 0, 0.32);
 }
 
 table#seletor-table{
@@ -52,10 +122,6 @@ table#seletor-table{
     padding: 5px;
 }
 
-#form > input{
-    background-color: #fff;
-    border:  1px solid #555;
-}
 
 #pesquisa {
     background-color: #888;

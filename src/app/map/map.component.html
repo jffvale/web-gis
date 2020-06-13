@@ -1,32 +1,75 @@
 <div class="mapa">
     <!-- Opções do mapa -->
-    <div id = "form">
-        <input type = "text" placeholder = "Busca">
-        <button type = "button">Buscar</button>
-        <div id = "mouse-position"></div>
-    </div>
-    <div id = "seletor">
-        <div id = "separador">
-            <h4>Camadas</h4>
-            <table>
+    <div id="seletor">
+        <div id="separador">
+            <div id="search">
+                <input type="text" placeholder="Buscar" id="text">
+                <button type="button" id="botao">
+                    <img src="../../assets/images/search.png" height="30px" />
+                </button>
+            </div>
+            <div id="mouse-position"></div>
+            <!-- <h4>Camadas</h4> -->
+            <div>
+                <div id="satelite">
+                    <span id="titulo-satelite">Satélite</span>
+                    <select id="option-satelite">
+                        <option>Escolha um satélite</option>
+                        <option>Satélite 1</option>
+                        <option>Satélite 2</option>
+                        <option>Satélite 3</option>
+                        <option>Satélite 4</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <div id="satelite">
+                    <span id="titulo-satelite-banda">Bandas</span>
+                    <span><input type="checkbox" /> AM</span><br>
+                    <span><input type="checkbox" /> FM</span><br>
+                    <span><input type="checkbox" /> Banda 1</span><br>
+                    <span><input type="checkbox" /> Banda 2</span><br>
+
+                </div>
+            </div>
+
+
+            <div>
+                <div id="satelite">
+                    <span id="titulo-satelite">Data</span>
+                    <mat-form-field id="date">
+                        <input matInput placeholder="Choose a date" [satDatepicker]="picker" [value]="date">
+                        <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                        <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <!-- <table>
                 <tr>
                     <td>Camada de Estados Brasileiros</td>
-                    <td><p-inputSwitch [(ngModel)] = "visible" (click) = "setLayer()"></p-inputSwitch></td>
+                    <td>
+                        <p-inputSwitch [(ngModel)]="visible" (click)="setLayer()"></p-inputSwitch>
+                    </td>
                 </tr>
                 <tr>
                     <td>Polígonos</td>
-                    <td><p-inputSwitch [(ngModel)] = "draw_bool" (click) = "drawFeature()"></p-inputSwitch></td>
+                    <td>
+                        <p-inputSwitch [(ngModel)]="draw_bool" (click)="drawFeature()"></p-inputSwitch>
+                    </td>
                 </tr>
                 <tr>
-                    <button type = "button" (click) = "cleanAll()">Limpar Formas</button>
+                    <button type="button" (click)="cleanAll()">Limpar Formas</button>
                 </tr>
                 <tr>
-                    <button type = "button" (click) = "search()">Buscar Polígono</button>
+                    <button type="button" (click)="search()">Buscar Polígono</button>
                 </tr>
             </table>
-            <div id = "info" >&nbsp;</div>
+            <div id="info">&nbsp;</div> -->
         </div>
     </div>
     <!-- Controle do Mapa -->
-    <div id = "map" class = "map"></div>
+    <div id="map" class="map"></div>
 </div>
