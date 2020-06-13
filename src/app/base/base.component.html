@@ -11,21 +11,23 @@
                 <span class="title">Lista de imagens</span>
                 <div class="content">
 
-                    <li *ngFor="let number of [0,1,2,3,4]">
+                    <li *ngFor="let image of all_images">
                         <div class="card">
 
                             <div class="square">
-                                <div class="photo">
-                                    <div class="profile">
-                                        <img src="https://image.flaticon.com/icons/png/512/854/854878.png" width="50px"
-                                            height="50px" />
+                                <a href = "{{ image.image }}">
+                                    <div class="photo">
+                                        <div class="profile">
+                                            <img src="https://image.flaticon.com/icons/png/512/854/854878.png" width="50px" height="50px" />
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                                 <div class="data">
-                                    <div class="info"><b>ID:</b> {{number}}</div>
-                                    <div class="info"><b>Projection:</b> EPSG:4326</div>
-                                    <div class="info"><b>Latitude</b>: -12.042006</div>
-                                    <div class="info"><b>Longitude</b>: -45.873413</div>
+                                    <div class="info"><b>{{ image.name }}</b></div>
+                                    <div class="info"><b>Date Time:</b> {{ image.dateTime }} </div>
+                                    <div class="info"><b>Proj:</b> EPSG: 4326</div>
+                                    <div class="info"><b>Band:</b> {{ image.band }}</div>
+                                    <div class="info">{{ image.description }}</div>
                                 </div>
                             </div>
                         </div>
@@ -33,14 +35,6 @@
 
                 </div>
             </div>
-            <!-- <div class="arrow"></div>
-            <div class="add">
-                <button type="button" class="button">Adicionar imagem</button>
-                <button type="button" class="button">Procurar formas</button>
-
-                <button type="button" class="button">Excluir imagens</button>
-
-            </div> -->
         </div>
         <div class="map">
             <app-map class="app-map"></app-map>

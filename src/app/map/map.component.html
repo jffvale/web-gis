@@ -15,10 +15,8 @@
                     <span id="titulo-satelite">Satélite</span>
                     <select id="option-satelite">
                         <option>Escolha um satélite</option>
-                        <option>Satélite 1</option>
-                        <option>Satélite 2</option>
-                        <option>Satélite 3</option>
-                        <option>Satélite 4</option>
+                        <option>Sentinel-1</option>
+                        <option>Landsat-8</option>
                     </select>
                 </div>
             </div>
@@ -26,48 +24,36 @@
             <div>
                 <div id="satelite">
                     <span id="titulo-satelite-banda">Bandas</span>
-                    <span><input type="checkbox" /> AM</span><br>
-                    <span><input type="checkbox" /> FM</span><br>
-                    <span><input type="checkbox" /> Banda 1</span><br>
-                    <span><input type="checkbox" /> Banda 2</span><br>
-
+                    <span><input type="checkbox" /> VV</span><br>
+                    <span><input type="checkbox" /> VH</span><br>
                 </div>
             </div>
 
+            <div>
+                <div id="satelite">
+                    <span>
+                        <p-inputSwitch [(ngModel)]="draw_bool" (click)="drawFeature()"></p-inputSwitch> Polígono
+                    </span><br>
+                    <span>
+                        <button type="button" class="button" (click)="search()">Buscar Polígono</button>
+                    </span>
+                    <span>
+                        <button type="button" class="button" (click)="cleanAll()">Limpar Formas</button>
+                    </span>
+                </div>
+            </div>
 
             <div>
                 <div id="satelite">
                     <span id="titulo-satelite">Data</span>
-                    <mat-form-field id="date">
+                    <form id="date">
                         <input matInput placeholder="Choose a date" [satDatepicker]="picker" [value]="date">
                         <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
-                    </mat-form-field>
+                    </form>
                 </div>
             </div>
 
-
-            <!-- <table>
-                <tr>
-                    <td>Camada de Estados Brasileiros</td>
-                    <td>
-                        <p-inputSwitch [(ngModel)]="visible" (click)="setLayer()"></p-inputSwitch>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Polígonos</td>
-                    <td>
-                        <p-inputSwitch [(ngModel)]="draw_bool" (click)="drawFeature()"></p-inputSwitch>
-                    </td>
-                </tr>
-                <tr>
-                    <button type="button" (click)="cleanAll()">Limpar Formas</button>
-                </tr>
-                <tr>
-                    <button type="button" (click)="search()">Buscar Polígono</button>
-                </tr>
-            </table>
-            <div id="info">&nbsp;</div> -->
         </div>
     </div>
     <!-- Controle do Mapa -->
