@@ -22,7 +22,7 @@ import Feature from 'ol/Feature';
 // Integração com a API
 import { Catalog } from '../entity/catalog';
 import { SearchRequest } from '../entity/search-request';
-import { DateTime } from '../entity/date-time';
+import { DateTime } from '../entity/datetime';
 import { ApiRestfulService } from '../services/api-restful-service';
 
 @Component({
@@ -167,7 +167,7 @@ export class MapComponent implements OnInit {
       (data: Catalog[]) => {
         data.forEach(
           (item: Catalog) => {
-            console.log(item.image);
+            console.log(item.coordinates);
           }
         )
       }
