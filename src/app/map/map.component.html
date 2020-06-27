@@ -54,6 +54,19 @@
                 </div>
             </div>
 
+            <div>
+                <div id="satelite">
+                    <span id="titulo-satelite">Results</span>
+                    <li *ngFor="let feature of results">
+                        <span>
+                            <a href="{{ feature.assets[0].href }}">
+                                {{ feature.collection }}
+                            </a>
+                        </span><br>
+                    </li>
+                </div>
+            </div>
+
         </div>
     </div>
     <!-- Controle do Mapa -->

@@ -1,5 +1,5 @@
 .map {
-    width: 80%;
+    width: 72%;
     height: 85vh;
     display: flex;
     justify-self: end;
@@ -60,7 +60,7 @@ table td{
     padding: 10px;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
-    font-size: large;
+    font-size: small;
     border: 0;
 
 }
