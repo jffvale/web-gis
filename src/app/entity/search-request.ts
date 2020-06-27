@@ -1,4 +1,4 @@
-import { DateTime } from './date-time';
+import { DateTime } from './datetime';
 
 export interface SearchRequest {
     dateTime: DateTime;
