@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ApiRestfulService } from '../services/api-restful-service';
-import { Catalog } from '../entity/catalog';
+import { Response } from '../entity/responses/response';
 
 @Component({
   selector: 'app-base',
@@ -9,18 +9,15 @@ import { Catalog } from '../entity/catalog';
   styleUrls: ['./base.component.css']
 })
 export class BaseComponent implements OnInit {
-  all_images: Catalog[] = [];
+  response: Response;
+  features: any;
 
   constructor(private service: ApiRestfulService) { }
 
   async ngOnInit() {
     await this.service.getCatalogList().toPromise().then(
-      (data: Catalog[]) => {
-        data.forEach(
-          (item: Catalog) => {
-            this.all_images.push(item)
-          }
-        )
+      (data: Response) => {
+        this.features = data.features;
       }
     );
   }

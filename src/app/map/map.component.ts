@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
-import TileWMS from 'ol/source/TileWMS';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
 import {OSM, Vector as VectorSource} from 'ol/source.js'
 
@@ -20,9 +19,8 @@ import GeoJSON from 'ol/format/GeoJSON';
 import Feature from 'ol/Feature';
 
 // Integração com a API
-import { Catalog } from '../entity/catalog';
-import { SearchRequest } from '../entity/search-request';
-import { DateTime } from '../entity/datetime';
+import { Geojson } from '../entity/geojson/geojson';
+import { Response } from '../entity/responses/response';
 import { ApiRestfulService } from '../services/api-restful-service';
 
 @Component({
@@ -41,6 +39,7 @@ export class MapComponent implements OnInit {
   public coord;
   private geojson;
   public source = new VectorSource({ wrapX: false });
+  public results: any[] = []
 
   // Criando camadas
   public vector = new VectorLayer({
@@ -155,19 +154,30 @@ export class MapComponent implements OnInit {
 
   async search() {
     this.formatGeojson();
-    let request: SearchRequest = {
-      dateTime: {
-        start: "2017-01-01",
-        end: "2020-12-31"
-      },
-      band: "VH",
-      geojson: this.geojson
+    this.results = [];
+    console.log();
+    let request: Geojson = {
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          properties: {
+            band: "VV",
+            projection: "EPSG:4326",
+            datetime: {
+              start: "2010-01-01",
+              end: "2018-12-31"
+            }
+          },
+          geometry: this.geojson.features[0].geometry
+        }
+      ]
     };
     await this.service.postSearchRequest(request).toPromise().then(
-      (data: Catalog[]) => {
-        data.forEach(
-          (item: Catalog) => {
-            console.log(item.coordinates);
+      (data: Response) => {
+        data.features.forEach(
+          (feature: any) => {
+            this.results.push(feature)
           }
         )
       }

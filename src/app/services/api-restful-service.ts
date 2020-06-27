@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Catalog } from '../entity/catalog';
-import { SearchRequest } from '../entity/search-request';
+import { Response } from '../entity/responses/response';
+import { Catalog } from '../entity/models/catalog';
+import { Geojson } from '../entity/geojson/geojson';
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +20,11 @@ export class ApiRestfulService {
     constructor(private httpClient: HttpClient) { }
 
     getCatalogList() {
-      return this.httpClient.get<Catalog[]>('/list', this.httpOptions);
+      return this.httpClient.get<Response>('/list', this.httpOptions);
     }
 
-    postSearchRequest(requestBody: SearchRequest) {
-      return this.httpClient.post<Catalog[]>('/search', requestBody, this.httpOptions);
+    postSearchRequest(requestBody: Geojson) {
+      return this.httpClient.post<Response>('/search', requestBody, this.httpOptions);
     }
 
     postAddCatalogItem(catalog: Catalog) {
@@ -33,5 +34,4 @@ export class ApiRestfulService {
     deleteCatalogItem(id: number) {
       return this.httpClient.delete<Catalog>('/remove?id=' + id.toString(), this.httpOptions);
     }
-
 }

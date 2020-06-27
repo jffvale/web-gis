@@ -6,7 +6,7 @@ const PROXY_CONFIG = [
           "/add",
           "/remove",
       ],
-      target: "http://192.168.0.117:4040/catalog",
+      target: "http://192.168.15.10:4040/catalog",
       secure: false
   }
 ]
