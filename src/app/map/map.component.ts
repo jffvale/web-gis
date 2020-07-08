@@ -21,6 +21,7 @@ import Feature from 'ol/Feature';
 // Integração com a API
 import { Geojson } from '../entity/geojson/geojson';
 import { Response } from '../entity/responses/response';
+import { User } from '../entity/models/user';
 import { ApiRestfulService } from '../services/api-restful-service';
 
 @Component({
@@ -38,6 +39,7 @@ export class MapComponent implements OnInit {
   public draw_bool;
   public coord;
   private geojson;
+  private user:User;
   public source = new VectorSource({ wrapX: false });
   public results: any[] = []
 
@@ -152,35 +154,52 @@ export class MapComponent implements OnInit {
     );
   }
 
+  login() {
+    let usr = prompt("Username");
+    let pw = prompt("Password");
+    this.user = { username: usr, password: pw };
+    this.service.login(this.user);
+    console.log(this.user);
+  }
+
+  logout() {
+    this.service.logout();
+    this.user = null;
+    console.log(this.user);
+  }
+
   async search() {
     this.formatGeojson();
-    this.results = [];
-    console.log();
-    let request: Geojson = {
-      type: "FeatureCollection",
-      features: [
-        {
-          type: "Feature",
-          properties: {
-            band: "VV",
-            projection: "EPSG:4326",
-            datetime: {
-              start: "2010-01-01",
-              end: "2018-12-31"
-            }
-          },
-          geometry: this.geojson.features[0].geometry
-        }
-      ]
-    };
-    await this.service.postSearchRequest(request).toPromise().then(
-      (data: Response) => {
-        data.features.forEach(
-          (feature: any) => {
-            this.results.push(feature)
+    try {
+      this.results = [];
+      let request: Geojson = {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            properties: {
+              band: "VV",
+              projection: "EPSG:4326",
+              datetime: {
+                start: "2010-01-01",
+                end: "2018-12-31"
+              }
+            },
+            geometry: this.geojson.features[0].geometry
           }
-        )
-      }
-    );
+        ]
+      };
+      await this.service.postSearchRequest(request).toPromise().then(
+        (data: Response) => {
+          data.features.forEach(
+            (feature: any) => {
+              this.results.push(feature)
+            }
+          )
+        }
+      );
+    } catch (error) {
+      alert("É necessário login para esta operação");
+    }
   }
 }

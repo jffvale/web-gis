@@ -1,12 +1,14 @@
 const PROXY_CONFIG = [
   {
       context: [
-          "/list",
-          "/search",
-          "/add",
-          "/remove",
+          "/catalog/list",
+          "/catalog/search",
+          "/catalog/add",
+          "/catalog/remove",
+          "/users/sign-up",
+          "/login"
       ],
-      target: "http://192.168.15.10:4040/catalog",
+      target: "http://192.168.15.11:4040",
       secure: false
   }
 ]
