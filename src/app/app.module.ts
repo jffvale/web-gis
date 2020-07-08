@@ -13,13 +13,15 @@ import { BaseComponent } from './base/base.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
-import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter'
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { LoginComponent } from './login/login.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    BaseComponent
+    BaseComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

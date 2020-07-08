@@ -99,38 +99,62 @@
     border-radius: 5px;
     display: flex;
     flex-direction: row;
-
 }
 
-.square{
+.square {
     width: fit-content;
     height: 100%;
     display: flex;
     align-items: center;
 }
 
-.profile{
+.profile {
     width: 60px;
     height: 60px;
     margin: 15px;
     border: 0.1px solid;
 }
-.info{
+
+.info {
     text-align: left;
     margin-left: 10px;
 }
 
-ul, li{
+ul, li {
     list-style: none;
     margin: 0;
 }
 
-.button{
+.button {
     display: flex;
     width: 70%;
     margin: auto;
     margin-top: 30px;
     border-radius: 5px;
     padding: 10px;
+}
 
+.perfil {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    position: relative;
+    align-items: center;
+}
+
+.profimage>img {
+    border-radius: 50%;
+}
+
+.name{
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: large;
+}
+
+.exit{
+    position: absolute;
+    right: 0;
+    cursor: pointer;
 }
