@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="modal">
+        <form class="example-form">
+
+            <div class="photo">
+                <img src="https://www.gannett-cdn.com/-mm-/d5e2b1d154f830ff7d8b16f13178ec1d3854aa4f/c=0-265-2589-1728/local/-/media/2017/08/30/USATODAY/USATODAY/636396561829785209-XXX-KERMIT--10-OF-10-47661325.JPG"  height="100%" width="100%">
+            </div>
+            <div class="user">
+                <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
+
+            </div>
+            <div class="psw">
+                <input matInput placeholder="Password" [(ngModel)]="password" type="password" name="password" required>
+
+            </div>
+
+            <button mat-raised-button (click)="login()" color="primary">Login</button>
+
+        </form>
+    </div>
+</div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ApiRestfulService } from '../services/api-restful-service';
 import { Response } from '../entity/responses/response';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-base',
@@ -12,7 +13,7 @@ export class BaseComponent implements OnInit {
   response: Response;
   features: any;
 
-  constructor(private service: ApiRestfulService) { }
+  constructor(private service: ApiRestfulService, private router: Router) { }
 
   async ngOnInit() {
     await this.service.getCatalogList().toPromise().then(
@@ -20,5 +21,10 @@ export class BaseComponent implements OnInit {
         this.features = data.features;
       }
     );
+  }
+
+  logout(): void {
+      this.router.navigate([""]);
+  
   }
 }
