@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { ApiRestfulService } from '../services/api-restful-service';
+import { Store } from '@ngrx/store';
+import { StorageModel } from '../entity/models/storage-model';
+import { User } from '../entity/models/user';
+import { Update } from '../services/store/action-types';
 
 @Component({
   selector: 'app-login',
@@ -8,17 +12,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  public usr: string;
+  public pw: string;
+  public toStore: StorageModel;
 
-  constructor(private router: Router) { }
-  username: string;
-  password: string;
-  ngOnInit() {
+  constructor(private storage: Store<StorageModel>, private service: ApiRestfulService, private router: Router, ) {
+    this.toStore = new StorageModel();
   }
-  login(): void {
-    if (this.username == 'admin' && this.password == 'admin') {
-      this.router.navigate(["app"]);
-    } else {
-      alert("NOME E/OU SENHA INCORRETOS");
+
+  ngOnInit() { }
+
+  async login () {
+    let user: User = {
+      username: this.usr,
+      password: this.pw
+    }
+    try {
+      await this.service.login(user);
+      this.toStore.setUser(user);
+      this.storage.dispatch(Update(this.toStore));
+      this.router.navigate(["map"]);
+    } catch(response) {
+      alert(response.statusText);
     }
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
@@ -24,57 +25,128 @@ import { Response } from '../entity/responses/response';
 import { User } from '../entity/models/user';
 import { ApiRestfulService } from '../services/api-restful-service';
 
+// Controle de armazenamento de informações
+import { Store, select } from '@ngrx/store';
+import { StorageModel } from '../entity/models/storage-model';
+import { Update } from '../services/store/action-types';
+import { Router } from '@angular/router';
+import { Feature as Item } from '../entity/responses/feature';
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css','../base/base.component.css']
+  styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
   // Controle do Mapa
-  date;
+  public date;
   public map;
   public features;
   public visible;
   public draw;
   public draw_bool;
+  public source;
   public coord;
-  private geojson;
-  private user:User;
-  public source = new VectorSource({ wrapX: false });
-  public results: any[] = []
+
+  // Análise de resultados
+  public cloud_percent;
+  public geojson;
+  public response: Response;
+  public imagesToDownload: Item[];
+  public downloadImage: any;
+  public toStore: StorageModel;
 
   // Criando camadas
-  public vector = new VectorLayer({
-    source: this.source
-  });
-
-  public raster = new TileLayer({
-    source: new OSM()
-  });
-
-  public base = new TileLayer({
-    preload: Infinity,
-    visible: true,
-    title: "osm",
-    baseLayer: true,
-    source: new OSM(),
-    layer: 'osm',
-  });
+  public vector;
+  public raster;
+  public base;
 
   // Integração com a API
-  constructor(private service: ApiRestfulService) { }
+  constructor(private storage: Store<StorageModel>, private service: ApiRestfulService, private router: Router) {
+    this.imagesToDownload = [];
+    this.downloadImage = {};
+    this.cloud_percent = 50;
+    this.draw_bool = true;
+    this.source = new VectorSource({ wrapX: false });
+    // Criando camadas
+    this.vector = new VectorLayer({
+      source: this.source
+    });
+    this.raster = new TileLayer({
+      source: new OSM()
+    });
+    this.base = new TileLayer({
+      preload: Infinity,
+      visible: true,
+      title: "osm",
+      baseLayer: true,
+      source: new OSM(),
+      layer: 'osm',
+    })
+    // Recuperando dados do armazenamento
+    this.toStore = new StorageModel();
+    try {
+      let data: any = this.storage.pipe(select('user'));
+      this.toStore.setUser(data.actionsObserver._value.payload.user);
+      this.service.login(this.toStore.user);
+    } catch (error) {
+      this.toStore.user = null
+    }
+  }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.loginAPI();
     this.initilizeMap();
+    this.initItens();
+  }
+
+  // Controle de usuários
+  login() {
+    this.router.navigate([""]);
+  }
+
+  logout() {
+    this.toStore = new StorageModel();
+    this.storage.dispatch(Update(this.toStore));
+    this.service.logout();
+    this.router.navigate([""]);
+  }
+
+  loginAPI() {
+    if (this.service.isValue(this.toStore.user)) {
+      this.service.login(this.toStore.user);
+    }
+  }
+
+  userIsLoged(): boolean {
+    return this.service.isValue(this.toStore.user);
+  }
+
+  // Configurações da busca
+  async initItens() {
+    await this.service.getCatalogList().toPromise().then(
+      (data: Response) => {
+        this.response = data;
+      }
+    );
+    this.response.features.forEach(
+      (data: Item) => {
+        this.downloadImage[data.id] = false;
+      }
+    );
+  }
+
+  thereIsDataToDisplay(): boolean {
+    return this.service.isValue(this.response);
   }
 
   // Iniciar as configurações do mapa
-  initilizeMap(): void {
+  initilizeMap() {
     this.features = [this.base];
 
     var view = new View({
       center: [-6124801.2015823, -1780692.0106836],
-      zoom: 4
+      zoom: 5
     });
 
     var mousePositionControl = new MousePosition({
@@ -92,17 +164,11 @@ export class MapComponent implements OnInit {
       view: view
     });
 
-    var mapAuxiliar = this.map;
-    this.map.on('pointermove', function(event){
-      if( event.dragging ){
-        return true;
-      }
-      var pixel = mapAuxiliar.getEventPixel(event.originalEvent);
-      var hit = mapAuxiliar.forEachLayerAtPixel(pixel, function(){
-        return true;
-      });
-      mapAuxiliar.getTargetElement().style.cursor = hit ? 'pointer' : '';
-    });
+    if ( this.userIsLoged() ) {
+      this.addInteraction();
+    } else {
+      this.removeInteraction();
+    }
   }
 
   addInteraction() {
@@ -119,14 +185,6 @@ export class MapComponent implements OnInit {
     this.map.removeLayer(this.vector);
     this.map.removeLayer(this.raster);
     this.draw = null;
-  }
-
-  drawFeature () {
-    if ( this.draw_bool ) {
-      this.addInteraction();
-    } else {
-      this.removeInteraction();
-    }
   }
 
   cleanAll () {
@@ -154,24 +212,9 @@ export class MapComponent implements OnInit {
     );
   }
 
-  login() {
-    let usr = prompt("Username");
-    let pw = prompt("Password");
-    this.user = { username: usr, password: pw };
-    this.service.login(this.user);
-    console.log(this.user);
-  }
-
-  logout() {
-    this.service.logout();
-    this.user = null;
-    console.log(this.user);
-  }
-
   async search() {
     this.formatGeojson();
     try {
-      this.results = [];
       let request: Geojson = {
         type: "FeatureCollection",
         features: [
@@ -191,15 +234,34 @@ export class MapComponent implements OnInit {
       };
       await this.service.postSearchRequest(request).toPromise().then(
         (data: Response) => {
-          data.features.forEach(
-            (feature: any) => {
-              this.results.push(feature)
-            }
-          )
+          this.response = data
         }
       );
+      this.storage.dispatch(Update(this.toStore));
     } catch (error) {
-      alert("É necessário login para esta operação");
+      alert(error);
     }
+  }
+
+  download() {
+    for (let item of this.response.features) {
+      if (this.downloadImage[item.id] == true) {
+        this.imagesToDownload.push(item);
+      }
+    }
+    if (this.imagesToDownload.length != 0) {
+      alert("Download " + this.imagesToDownload.length + " selected images?");
+    } else {
+      alert("Select images to download!")
+    }
+    this.imagesToDownload = [];
+  }
+
+  thereIsImagesToDownload(): boolean {
+    let result: boolean = false;
+    for (let item of this.response.features) {
+      result = result || this.downloadImage[item.id];
+    }
+    return result;
   }
 }

@@ -1,78 +1,145 @@
-<div class="mapa">
-    <!-- Opções do mapa -->
-    <div id="seletor">
-        <div id="separador">
-            <div id="search">
-                <input type="text" placeholder="Buscar" id="text">
-                <button type="button" id="botao">
-                    <img src="../../assets/images/search.png" height="30px" />
-                </button>
-            </div>
-            <div id="mouse-position"></div>
-            <!-- <h4>Camadas</h4> -->
-            <div>
-                <div id="satelite">
-                    <span id="titulo-satelite">Satélite</span>
-                    <select id="option-satelite">
-                        <option>Escolha um satélite</option>
-                        <option>Sentinel-1</option>
-                        <option>Landsat-8</option>
-                    </select>
+<div class="container">
+    <!-- <div class="header">
+        <div class="logo">
+            <img src="../../assets/images/logo.png" class="image" />
+        </div>
+        <div class="line"></div>
+    </div> -->
+    <div class="component">
+        <div class="side-menu">
+
+            <div class="perfil" *ngIf="userIsLoged()">
+                <div class="profimage">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQBLSSQP7hKqNeyqazUAGQDc9WBhl6pv1KH7A&usqp=CAU"  height="50px" width="50px">
                 </div>
+                <div class="name">
+                    {{ toStore.user.username }}
+                </div>
+                <button pButton class="exit" (click)="logout()" type="button" icon="pi pi-power-off" label="Sair"></button>
             </div>
 
-            <div>
-                <div id="satelite">
-                    <span id="titulo-satelite-banda">Bandas</span>
-                    <span><input type="checkbox" /> VV</span><br>
-                    <span><input type="checkbox" /> VH</span><br>
+            <div class="perfil" *ngIf="!userIsLoged()">
+                <div class="profimage">
+                    <img src="https://taxprepwny.com/wp-content/plugins/testimonial-add/templates/user-icon.jpg"  height="50px" width="50px">
                 </div>
+                <button pButton class="exit" (click)="logout()" type="button" icon="pi pi-unlock" label="Login"></button>
             </div>
 
-            <div>
-                <div id="satelite">
-                    <span>
-                        <p-inputSwitch [(ngModel)]="draw_bool" (click)="drawFeature()"></p-inputSwitch> Polígono
-                    </span><br>
-                    <span>
-                        <button type="button" class="button" (click)="login()">login</button>
-                        <button type="button" class="button" (click)="logout()">logout</button>
-                    </span>
-                    <span>
-                        <button type="button" class="button" (click)="search()">Buscar Polígono</button>
-                    </span>
-                    <span>
-                        <button type="button" class="button" (click)="cleanAll()">Limpar Formas</button>
-                    </span>
-                </div>
-            </div>
-
-            <div>
-                <div id="satelite">
-                    <span id="titulo-satelite">Data</span>
-                    <form id="date">
-                        <input matInput placeholder="Choose a date" [satDatepicker]="picker" [value]="date">
-                        <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
-                        <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
-                    </form>
-                </div>
-            </div>
-
-            <div>
-                <div id="satelite">
-                    <span id="titulo-satelite">Results</span>
-                    <li *ngFor="let feature of results">
-                        <span>
-                            <a href="{{ feature.assets[0].href }}">
-                                {{ feature.collection }}
-                            </a>
-                        </span><br>
+            <div class="lista" *ngIf="thereIsDataToDisplay()">
+                <span class="title" *ngIf="!userIsLoged()">
+                    Lista de imagens
+                </span>
+                <span class="title" *ngIf="userIsLoged()">
+                    {{ response.numberReturned }} imagens retornadas
+                </span>
+                <div class="content">
+                    <li *ngFor="let feature of response.features">
+                        <div class="card">
+                            <div class="square">
+                                <div class="marker" *ngIf="userIsLoged()">
+                                    <p-inputSwitch [(ngModel)]="downloadImage[feature.id]"></p-inputSwitch>
+                                </div>
+                                <a href = "{{ feature.assets[0].href }}">
+                                    <div class="photo">
+                                        <div class="profile">
+                                            <img src="../../assets/images/example.jpg" width="50px" height="50px" />
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="data">
+                                    <div class="info"><b>{{ feature.collection }}</b></div>
+                                    <div class="info"><b>Date: </b>{{ feature.properties.datetime.start }}</div>
+                                    <div class="info"><b>Proj: </b>{{ feature.properties.projection }}</div>
+                                    <div class="info"><b>Band: </b>{{ feature.properties.band }}</div>
+                                    <div class="info">{{ feature.type }}</div>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </div>
             </div>
+        </div>
+        <div class="mapa">
+            <!-- Opções do mapa -->
+            <div id="seletor">
+                <div id="separador">
+                    <div id="search">
+                        <input type="text" placeholder="Buscar" id="text">
+                        <button type="button" id="botao">
+                            <img src="../../assets/images/search.png" height="30px" />
+                        </button>
+                    </div>
+                    <div *ngIf="userIsLoged()">
+                        <div id="satelite">
+                            <span>
+                                <button pButton type="button" class="button" (click)="search()" icon="pi pi-globe" label="Buscar Polígono"></button>
+                            </span>
+                            <span>
+                                <div *ngIf="thereIsImagesToDownload()" >
+                                    <a href="http://www.dpi.inpe.br/obt/agricultural-database/lem/dados/cenas/Landsat8/LC08_20170615.zip">
+                                        <button pButton type="button" class="button" (click)="download()" icon="pi pi-download" label="Download"></button>
+                                    </a>
+                                </div>
+                                <div *ngIf="!thereIsImagesToDownload()">
+                                    <button pButton type="button" class="button" (click)="download()" icon="pi pi-download" label="Download"></button>
+                                </div>
+                            </span>
+                            <span>
+                                <button pButton type="button" class="button" (click)="cleanAll()" icon="pi pi-undo" label="Limpar Formas"></button>
+                            </span>
+                        </div>
+                    </div>
 
+                    <div>
+                        <div id="satelite">
+                            <span id="titulo-satelite">Satélite</span>
+                            <select id="option-satelite">
+                                <option>Escolha um satélite</option>
+                                <option>Sentinel-1</option>
+                                <option>Landsat-8</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div id="satelite">
+                            <span id="titulo-satelite-banda">Bandas</span>
+                            <span><input type="checkbox" /> VV</span><br>
+                            <span><input type="checkbox" /> VH</span><br>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div id="satelite">
+                            <span id="titulo-satelite">Data</span>
+                            <form id="date">
+                                <input matInput placeholder="Choose a date" [satDatepicker]="picker" [value]="date">
+                                <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                                <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div id="satelite">
+                            <span id="titulo-satelite">
+                                Cobertura de Nuvem: {{ cloud_percent }} %
+                            </span><br>
+                            <span>
+                                <p-slider [(ngModel)]="cloud_percent" [style]="{'width':'14em'}"></p-slider>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Controle do Mapa -->
+            <div id="map" class="map"></div>
+            <div id="mouse-position"></div>
         </div>
     </div>
-    <!-- Controle do Mapa -->
-    <div id="map" class="map"></div>
+    <!-- <div class="footer">
+        <div class="loved">
+            Made by Fatec with &#x2665;
+        </div>
+    </div> -->
 </div>

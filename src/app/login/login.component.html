@@ -1,21 +1,22 @@
 <div class="container">
     <div class="modal">
         <form class="example-form">
-
             <div class="photo">
-                <img src="https://www.gannett-cdn.com/-mm-/d5e2b1d154f830ff7d8b16f13178ec1d3854aa4f/c=0-265-2589-1728/local/-/media/2017/08/30/USATODAY/USATODAY/636396561829785209-XXX-KERMIT--10-OF-10-47661325.JPG"  height="100%" width="100%">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQBLSSQP7hKqNeyqazUAGQDc9WBhl6pv1KH7A&usqp=CAU"  height="100%" width="100%">
             </div>
             <div class="user">
-                <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
-
+                <span class="ui-float-label">
+                    <input id="float-input-1" type="text" size="30" [(ngModel)]="usr" name="username" required pInputText>
+                    <label for="float-input">Username</label>
+                </span>
             </div>
             <div class="psw">
-                <input matInput placeholder="Password" [(ngModel)]="password" type="password" name="password" required>
-
+                <span class="ui-float-label">
+                    <input id="float-input-2" type="password" size="30" [(ngModel)]="pw" name="password" required pInputText>
+                    <label for="float-input">Password</label>
+                </span>
             </div>
-
-            <button mat-raised-button (click)="login()" color="primary">Login</button>
-
+            <button pButton type="button" label="Login" mat-raised-button (click)="login()" color="primary"></button><br/>
         </form>
     </div>
 </div>
