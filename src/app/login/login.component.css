@@ -1,5 +1,5 @@
 .container{
-    background: linear-gradient(180deg, rgba(238, 134, 0, 1) 4%, rgba(255, 174, 36, 1) 42%, rgba(238, 134, 0, 1) 96%);
+    /* background: linear-gradient(180deg, rgba(238, 134, 0, 1) 4%, rgba(255, 174, 36, 1) 42%, rgba(238, 134, 0, 1) 96%); */
     height: 100vh;
     display: flex;
 }
@@ -15,7 +15,7 @@
 }
 
 .example-form{
-    display:flex; 
+    display:flex;
     flex-direction: column;
     align-items: center;
     height: 50%;
@@ -37,7 +37,7 @@ img{
 
 .user{
     margin-top:20px;
-    
+
 }
 
 .psw{

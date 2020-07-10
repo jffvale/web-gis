@@ -9,18 +9,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
-import { BaseComponent } from './base/base.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
-import { LoginComponent } from './login/login.component'
+import { LoginComponent } from './login/login.component';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { SliderModule } from 'primeng/slider';
+
+import { StoreModule } from '@ngrx/store';
+import { storage_data } from './services/store/reducer';
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    BaseComponent,
     LoginComponent
   ],
   imports: [
@@ -32,12 +36,24 @@ import { LoginComponent } from './login/login.component'
     BrowserAnimationsModule,
     HttpClientModule,
     SatDatepickerModule,
-    SatNativeDateModule
-
+    SatNativeDateModule,
+    ButtonModule,
+    InputTextModule,
+    SliderModule,
+    StoreModule.forRoot({
+      store: storage_data
+    })
   ],
   providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE]
+    },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MAT_MOMENT_DATE_FORMATS
+    }
   ],
   bootstrap: [AppComponent]
 })
