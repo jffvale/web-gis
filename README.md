@@ -13,21 +13,13 @@ Para a execução desta aplicação ao é necessário ter o projeto [API Restful
 ## Execução para o ambiente de micro serviços em Docker
 > **Obs.:** Necessária instalação do *Node 10+* e *Angular CLI 9+*, não esqueça de modificar o ip do serviço de cache em `app/services/cache-system.ts`.
 
-```
-##  Construir o pacote HTML para a execução do http-server
-$ ng build
-
-## Copie o arquivo Dockerfile para o pacote recém-gerado
-$ cp Dockerfile dist/web-gis && cd dist/web-gis
-```
-
 > Para a execução do ambiente em docker execute os seguintes comandos:
 ```
 ## Crie uma imagem para a execução do container
 $ docker build -t web-gis:latest .
 
 ## Fica a criterio do usuario criar um volume para armazenar os dados
-$ docker container run --name app-smh-ui -p 8082:8080 -d web-gis:latest
+$ docker container run --name app-web-gis -p 8082:8080 -d web-gis:latest
 ```
 
 > Abaixo se encontra a aplicação em funcionamento utilizando os passos anteriores:
