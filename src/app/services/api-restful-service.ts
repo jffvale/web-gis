@@ -20,14 +20,9 @@ export class ApiRestfulService {
   constructor(private httpClient: HttpClient) { }
 
   async signup(user: User) {
-    let result = false;
     await this.httpClient.post<CustomResponse>('/users/sign-up', user, { headers: new HttpHeaders(this.httpOptions) }).toPromise().then(
       (response: CustomResponse) => {
-        if (response.code === 200) {
-          alert(response.description);
-        } else {
-          alert(response.description);
-        }
+        alert(response.description);
       }
     );
   }
@@ -35,23 +30,13 @@ export class ApiRestfulService {
   async login(user: User) {
     await this.httpClient.post<ResponseToken>('/login', user, { headers: new HttpHeaders(this.httpOptions) }).toPromise().then(
       (response: ResponseToken) => {
-        try {
-          this.httpOptions['token'] = response.token;
-          alert(response.description);
-        } catch (error) {
-          alert(error);
-        }
+        this.httpOptions['token'] = response.token;
       }
     );
   }
 
   logout() {
-    try {
-      delete this.httpOptions['token'];
-      alert("Logout");
-    } catch (error) {
-      alert(error);
-    }
+    delete this.httpOptions['token'];
   }
 
   getCatalogList() {
@@ -68,5 +53,9 @@ export class ApiRestfulService {
 
   deleteCatalogItem(id: number) {
     return this.httpClient.delete<Catalog>('/catalog/remove?id=' + id.toString(), { headers: this.httpOptions });
+  }
+
+  isValue(data: any): boolean {
+    return data != undefined && data != null;
   }
 }
